@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Layout Components
 import NavbarSection from "./components/NavbarSection";
@@ -20,64 +20,98 @@ import Gallery from "./components/Gallery";
 import TermsConditions from "./components/TermsConditions";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 
-// 1. The Home Component with Scroll-to-URL Logic
+// Home Component
 const Home = () => {
-  useEffect(() => {
-    const handleScroll = () => {
-      // Find all divs that have an ID
-      const sections = document.querySelectorAll(".scroll-section");
-      let currentSection = "";
+useEffect(() => {
+const handleScroll = () => {
+// Find all sections with the scroll-section class
+const sections = document.querySelectorAll(".scroll-section");
+let currentSection = "";
 
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        // Check if the scroll position is within this section (with 150px offset for Navbar)
-        if (window.scrollY >= sectionTop - 150) {
-          currentSection = section.getAttribute("id");
-        }
-      });
 
-      // Update the URL hash without reloading the page
-      if (currentSection) {
-        window.history.replaceState(null, null, `/#${currentSection}`);
-      }
-    };
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop;
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    // Check if the scroll position is within this section
+    // with 150px offset for the navbar
+    if (window.scrollY >= sectionTop - 150) {
+      currentSection = section.getAttribute("id");
+    }
+  });
 
-  return (
-    <>
-      <NavbarSection />
-   
-      <div id="home" className="scroll-section"><Hero /></div>
-      <div id="about" className="scroll-section"><About /></div>
-      <div id="offers" className="scroll-section"><WhatWeOffer /></div>
-      <div id="stats" className="scroll-section"><Counters /></div>
-      <div id="admission" className="scroll-section"><AdmissionProcess /></div>
-      <div id="principal" className="scroll-section"><PrincipalMessage /></div>
-      <div id="values" className="scroll-section"><MainValues /></div>
-      <div id="testimonials" className="scroll-section"><Testimonials /></div>
-      <div id="gallery" className="scroll-section"><Gallery /></div>
-
-      
-      <Footer />
-    </>
-  );
+  // Update URL hash without reloading the page
+  if (currentSection) {
+    window.history.replaceState(
+      null,
+      "",
+      `/#${currentSection}`
+    );
+  }
 };
 
-// 2. Main App Component
+window.addEventListener("scroll", handleScroll);
+
+return () => {
+  window.removeEventListener("scroll", handleScroll);
+};
+
+
+}, []);
+
+return (
+<> <NavbarSection />
+
+
+  <div id="home" className="scroll-section">
+    <Hero />
+  </div>
+
+  <div id="about" className="scroll-section">
+    <About />
+  </div>
+
+  <div id="offers" className="scroll-section">
+    <WhatWeOffer />
+  </div>
+
+  <div id="stats" className="scroll-section">
+    <Counters />
+  </div>
+
+  <div id="admission" className="scroll-section">
+    <AdmissionProcess />
+  </div>
+
+  <div id="principal" className="scroll-section">
+    <PrincipalMessage />
+  </div>
+
+  <div id="values" className="scroll-section">
+    <MainValues />
+  </div>
+
+  <div id="testimonials" className="scroll-section">
+    <Testimonials />
+  </div>
+
+  <div id="gallery" className="scroll-section">
+    <Gallery />
+  </div>
+
+  <Footer />
+</>
+
+
+);
+};
+
+// Main App Component
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/terms" element={<TermsConditions />} />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-      </Routes>
-    </Router>
-  );
+return ( <Router> <Routes>
+<Route path="/" element={<Home />} />
+<Route path="/terms" element={<TermsConditions />} />
+<Route path="/privacy" element={<PrivacyPolicy />} /> </Routes> </Router>
+);
 }
 
 export default App;
