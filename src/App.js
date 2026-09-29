@@ -16,15 +16,10 @@ import PrincipalMessage from "./components/PrincipalMessage";
 import Testimonials from "./components/Testimonials";
 import Gallery from "./components/Gallery";
 
-// Legal Pages
-import TermsConditions from "./components/TermsConditions";
-import PrivacyPolicy from "./components/PrivacyPolicy";
-
 // Home Component
 const Home = () => {
 useEffect(() => {
 const handleScroll = () => {
-// Find all sections with the scroll-section class
 const sections = document.querySelectorAll(".scroll-section");
 let currentSection = "";
 
@@ -32,14 +27,11 @@ let currentSection = "";
   sections.forEach((section) => {
     const sectionTop = section.offsetTop;
 
-    // Check if the scroll position is within this section
-    // with 150px offset for the navbar
     if (window.scrollY >= sectionTop - 150) {
       currentSection = section.getAttribute("id");
     }
   });
 
-  // Update URL hash without reloading the page
   if (currentSection) {
     window.history.replaceState(
       null,
@@ -108,9 +100,7 @@ return (
 // Main App Component
 function App() {
 return ( <Router> <Routes>
-<Route path="/" element={<Home />} />
-<Route path="/terms" element={<TermsConditions />} />
-<Route path="/privacy" element={<PrivacyPolicy />} /> </Routes> </Router>
+<Route path="/" element={<Home />} /> </Routes> </Router>
 );
 }
 
