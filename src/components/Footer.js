@@ -1,14 +1,92 @@
-
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { Send } from "lucide-react";
 
 function Footer() {
+  // ================= GOOGLE SHEETS =================
+
+  const GOOGLE_SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbyNzk5MX7b1J9BPh9U0OQoPfwnmdtFzBpHDeBmRi-2xFuaafTEy2RvJo3Pm50ZL5YTQQw/exec";
+
+  // ================= CONTACT FORM =================
+
+  const [contactData, setContactData] = useState({
+    formType: "contact",
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [contactLoading, setContactLoading] = useState(false);
+  const [contactMessage, setContactMessage] = useState("");
+  const [contactSuccess, setContactSuccess] = useState(false);
+
+  const handleContactChange = (e) => {
+    const { name, value } = e.target;
+
+    setContactData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+
+    setContactLoading(true);
+    setContactMessage("");
+    setContactSuccess(false);
+
+    try {
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify(contactData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setContactSuccess(true);
+
+        setContactMessage(
+          "Thank you! Your message has been sent successfully."
+        );
+
+        // Reset form
+        setContactData({
+          formType: "contact",
+          name: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        setContactSuccess(false);
+
+        setContactMessage(
+          "Unable to send your message. Please try again."
+        );
+      }
+    } catch (error) {
+      console.error("Contact form error:", error);
+
+      setContactSuccess(false);
+
+      setContactMessage(
+        "Something went wrong. Please try again."
+      );
+    } finally {
+      setContactLoading(false);
+    }
+  };
+
+  // ================= FOOTER STYLES =================
+
   const footerContainerStyle = {
     position: "relative",
     paddingTop: "80px",
     paddingBottom: "150px",
     width: "100%",
+
     backgroundImage: `
       linear-gradient(
         rgba(255, 255, 255, 0.12),
@@ -16,6 +94,7 @@ function Footer() {
       ),
       url('/footerbg.png')
     `,
+
     backgroundSize: "cover",
     backgroundPosition: "center center",
     backgroundRepeat: "no-repeat",
@@ -59,13 +138,13 @@ function Footer() {
   return (
     <>
       <footer style={footerContainerStyle}>
-
         {/* Main Glass Footer */}
         <div className="footer-glass" style={glassContainerStyle}>
           <Container>
             <Row>
 
               {/* ================= BRAND ================= */}
+
               <Col
                 lg={3}
                 md={6}
@@ -98,9 +177,11 @@ function Footer() {
                   📍 Ward No 7, Haat Stahal Ke Samne,
                   Nand Lal Ji Badi, Teacher Colony,
                   Kapren, Dist. Bundi (Rajasthan)
+
                   <br />
 
                   📞 +91 7339839499 , +91 9782142562
+
                   <br />
 
                   ✉️ dishaconventschool2023@email.com
@@ -108,6 +189,7 @@ function Footer() {
               </Col>
 
               {/* ================= LINKS ================= */}
+
               <Col
                 lg={4}
                 md={6}
@@ -148,6 +230,7 @@ function Footer() {
               </Col>
 
               {/* ================= CONTACT ================= */}
+
               <Col
                 lg={5}
                 md={12}
@@ -157,36 +240,58 @@ function Footer() {
               >
                 <h5 style={titleStyle}>Get In Touch</h5>
 
-                <Form>
+                <Form onSubmit={handleContactSubmit}>
+
                   <Row className="g-2">
+
+                    {/* NAME */}
 
                     <Col md={6} sm={12}>
                       <Form.Control
                         type="text"
+                        name="name"
+                        value={contactData.name}
+                        onChange={handleContactChange}
                         placeholder="Your Name"
                         style={inputStyle}
+                        required
                       />
                     </Col>
+
+                    {/* EMAIL */}
 
                     <Col md={6} sm={12}>
                       <Form.Control
                         type="email"
+                        name="email"
+                        value={contactData.email}
+                        onChange={handleContactChange}
                         placeholder="Email Address"
                         style={inputStyle}
+                        required
                       />
                     </Col>
 
                   </Row>
 
+                  {/* MESSAGE */}
+
                   <Form.Control
                     as="textarea"
                     rows={3}
+                    name="message"
+                    value={contactData.message}
+                    onChange={handleContactChange}
                     placeholder="How can we help you?"
                     style={inputStyle}
+                    required
                   />
+
+                  {/* SUBMIT */}
 
                   <Button
                     type="submit"
+                    disabled={contactLoading}
                     style={{
                       backgroundColor: "#ff6b6b",
                       border: "none",
@@ -198,11 +303,38 @@ function Footer() {
                       gap: "8px",
                       boxShadow:
                         "0 4px 10px rgba(255, 107, 107, 0.3)",
+                      opacity: contactLoading ? 0.7 : 1,
                     }}
                   >
-                    Send Message
+                    {contactLoading
+                      ? "Sending..."
+                      : "Send Message"}
+
                     <Send size={16} />
                   </Button>
+
+                  {/* SUCCESS / ERROR MESSAGE */}
+
+                  {contactMessage && (
+                    <div
+                      style={{
+                        marginTop: "12px",
+                        padding: "10px 14px",
+                        borderRadius: "8px",
+                        backgroundColor: contactSuccess
+                          ? "#f0fdf4"
+                          : "#fef2f2",
+                        color: contactSuccess
+                          ? "#166534"
+                          : "#991b1b",
+                        fontSize: "14px",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {contactMessage}
+                    </div>
+                  )}
+
                 </Form>
               </Col>
 
@@ -211,6 +343,7 @@ function Footer() {
         </div>
 
         {/* ================= COPYRIGHT ================= */}
+
         <div
           className="footer-copyright"
           style={{
@@ -234,6 +367,7 @@ function Footer() {
       </footer>
 
       {/* ================= RESPONSIVE CSS ================= */}
+
       <style>
         {`
 
@@ -367,4 +501,3 @@ function Footer() {
 }
 
 export default Footer;
-
