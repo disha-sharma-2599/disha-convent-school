@@ -15,18 +15,19 @@ function Hero() {
   // ==============================
   // GOOGLE APPS SCRIPT URL
   // ==============================
-  const GOOGLE_SCRIPT_URL =
-    "YOUR_GOOGLE_APPS_SCRIPT_URL";
+const GOOGLE_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbyNzk5MX7b1J9BPh9U0OQoPfwnmdtFzBpHDeBmRi-2xFuaafTEy2RvJo3Pm50ZL5YTQQw/exec";
 
 
   // ==============================
   // FORM STATE
   // ==============================
-  const [formData, setFormData] = useState({
-    studentName: "",
-    parentName: "",
-    phone: "",
-  });
+ const [formData, setFormData] = useState({
+  formType: "admission",
+  studentName: "",
+  parentName: "",
+  phone: "",
+});
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -74,11 +75,12 @@ function Hero() {
         );
 
         // Clear form
-        setFormData({
-          studentName: "",
-          parentName: "",
-          phone: "",
-        });
+       setFormData({
+  formType: "admission",
+  studentName: "",
+  parentName: "",
+  phone: "",
+});
 
       } else {
 
