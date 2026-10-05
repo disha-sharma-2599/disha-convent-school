@@ -5,10 +5,10 @@ import { useInView } from "react-intersection-observer";
 
 function Counters() {
   const stats = [
-    { number: 500, suffix: "+", label: "Students", color: "#eba371", icon: "🎓" },
-    { number: 25, suffix: "+", label: "Teachers", color: "#465a6d", icon: "👩‍🏫" },
-    { number: 15, suffix: "+", label: "Years", color: "#8cb0b9", icon: "⏳" },
-    { number: 20, suffix: "+", label: "Awards", color: "#fbb040", icon: "🏆" },
+    { number: 250, suffix: "+", label: "Students", color: "#eba371", icon: "🎓" },
+    { number: 16, suffix: "+", label: "Teachers", color: "#465a6d", icon: "👩‍🏫" },
+    { number: 5, suffix: "+", label: "Years", color: "#8cb0b9", icon: "⏳" },
+    { number: 9, suffix: "+", label: "Awards", color: "#fbb040", icon: "🏆" },
   ];
 
   // This hook detects when the section is visible on screen
