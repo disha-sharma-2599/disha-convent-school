@@ -184,7 +184,7 @@ function Footer() {
 
                   <br />
 
-                  ✉️ dishaconventschool2023@email.com
+                  ✉️ dishaconventschool2023@gmail.com
                 </p>
               </Col>
 
