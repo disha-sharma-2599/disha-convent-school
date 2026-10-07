@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { Send } from "lucide-react";
+import {
+  Send,
+  Facebook,
+  Instagram,
+  Youtube,
+  MessageCircle,
+} from "lucide-react";
 
 function Footer() {
   // ================= GOOGLE SHEETS =================
@@ -52,7 +58,6 @@ function Footer() {
           "Thank you! Your message has been sent successfully."
         );
 
-        // Reset form
         setContactData({
           formType: "contact",
           name: "",
@@ -79,7 +84,7 @@ function Footer() {
     }
   };
 
-  // ================= FOOTER STYLES =================
+  // ================= STYLES =================
 
   const footerContainerStyle = {
     position: "relative",
@@ -135,10 +140,34 @@ function Footer() {
     boxShadow: "none",
   };
 
+  const socialLinks = [
+    {
+      name: "Facebook",
+      icon: <Facebook size={18} />,
+      url: "https://www.facebook.com/",
+    },
+    {
+      name: "Instagram",
+      icon: <Instagram size={18} />,
+      url: "https://www.instagram.com/",
+    },
+    {
+      name: "YouTube",
+      icon: <Youtube size={18} />,
+      url: "https://www.youtube.com/@DISHACONVANT-t8p",
+    },
+    {
+      name: "WhatsApp",
+      icon: <MessageCircle size={18} />,
+      url: "https://wa.me/917339839499",
+    },
+  ];
+
   return (
     <>
       <footer style={footerContainerStyle}>
-        {/* Main Glass Footer */}
+        {/* ================= MAIN GLASS FOOTER ================= */}
+
         <div className="footer-glass" style={glassContainerStyle}>
           <Container>
             <Row>
@@ -171,7 +200,7 @@ function Footer() {
                     fontSize: "14px",
                     lineHeight: "1.7",
                     color: "#0e1011",
-                    marginBottom: "0",
+                    marginBottom: "15px",
                   }}
                 >
                   📍 Ward No 7, Haat Stahal Ke Samne,
@@ -186,6 +215,23 @@ function Footer() {
 
                   ✉️ dishaconventschool2023@gmail.com
                 </p>
+
+                {/* ================= SOCIAL LINKS ================= */}
+
+                <div className="footer-socials">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.name}
+                      className="footer-social-link"
+                    >
+                      {social.icon}
+                    </a>
+                  ))}
+                </div>
               </Col>
 
               {/* ================= LINKS ================= */}
@@ -313,7 +359,7 @@ function Footer() {
                     <Send size={16} />
                   </Button>
 
-                  {/* SUCCESS / ERROR MESSAGE */}
+                  {/* SUCCESS / ERROR */}
 
                   {contactMessage && (
                     <div
@@ -370,6 +416,39 @@ function Footer() {
 
       <style>
         {`
+
+          /* ================= SOCIAL ICONS ================= */
+
+          .footer-socials {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+          }
+
+          .footer-social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #061a25;
+            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+          }
+
+          .footer-social-link:hover {
+            transform: translateY(-4px);
+            background: #ff6b6b;
+            color: #ffffff;
+            border-color: #ff6b6b;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+          }
+
 
           /* =========================================
              TABLET
@@ -435,6 +514,11 @@ function Footer() {
 
             .footer-form .form-control {
               width: 100%;
+            }
+
+            .footer-social-link {
+              width: 38px;
+              height: 38px;
             }
 
             .footer-copyright {
