@@ -149,7 +149,7 @@ function Footer() {
     {
       name: "Instagram",
       icon: <Instagram size={18} />,
-      url: "https://www.instagram.com/",
+      url: "https://www.instagram.com/schooldishaconvent/?hl=en",
     },
     {
       name: "YouTube",
