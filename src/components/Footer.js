@@ -144,7 +144,7 @@ function Footer() {
     {
       name: "Facebook",
       icon: <Facebook size={18} />,
-      url: "https://www.facebook.com/",
+      url: "https://www.facebook.com/disha.convent.school.2025",
     },
     {
       name: "Instagram",
